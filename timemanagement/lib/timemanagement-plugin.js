@@ -4,12 +4,16 @@ define([
 	'gcn/gcn-plugin',
 	'i18n!timemanagement/nls/i18n',
 	'i18n!aloha/nls/i18n',
-	'jquery',
+	'aloha/jquery',
+	'timemanagement/./datetimepicker',
 	'css!timemanagement/css/timemanagement.css'
-], function(Aloha,Plugin, GCNplugin, i18n, i18nCore, jQuery) {
+], function(Aloha,Plugin, GCNplugin, i18n, i18nCore, $) {
 	'use strict';
 
-	
+	console.log(GCNplugin);
+	console.log(arguments);
+	debugger;
+
 	
 	/**
 	 * We want to use the sidebar too
@@ -22,13 +26,22 @@ define([
 			expanded: true,
 			activeOn: true,
 			content: '<div id="aloha-timemanagement-panel-content">\
-						You div contains: <span id="aloha-timemanagement-panel-effective-content"></span>\
+						<fieldset>\
+							<input type="text" id="aloha-timemanagement-cdate">\
+						</fieldset>\
 					  </div>',
 			onInit: function () {
 				console.log("Init sidebar called");
+				$('#aloha-timemanagement-cdate').datetimepicker();
 			},
 			onActivate: function(effective) {
-				debugger;
+				GCN.page(GCNplugin.page.id(), function(page){
+					var timemanagement = page.prop('timeManagement');
+					console.log(timemanagement);
+					var cdate = page.prop('cdate');
+					console.log(cdate);
+					$('#aloha-timemanagement-cdate').datetimepicker('setDate', new Date(cdate * 1000));
+				});
 				this.content.find('#aloha-timemanagement-panel-effective-content').html($(effective).html());
 			}
 		});

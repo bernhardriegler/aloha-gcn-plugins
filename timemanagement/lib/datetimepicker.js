@@ -674,7 +674,7 @@ define(['aloha/jquery'], function(jQuery) {
                 var hourMax = parseInt((this._defaults.hourMax - ((this._defaults.hourMax - this._defaults.hourMin) % this._defaults.stepHour)), 10),
                     minMax = parseInt((this._defaults.minuteMax - ((this._defaults.minuteMax - this._defaults.minuteMin) % this._defaults.stepMinute)), 10),
                     secMax = parseInt((this._defaults.secondMax - ((this._defaults.secondMax - this._defaults.secondMin) % this._defaults.stepSecond)), 10),
-                    millisecMax = parseInt((this._defaults.millisecMax - ((this._defaults.millisecMax - this._defaults.millisecMin) % this._defaults.stepMillisec)), 10);
+                    millisecMax = parseInt((this._defaults.millisecMax - ((this._defaults.millisecMax - this._defaults.millisecMin) % this._defaults.stepMillisec)), 10),
                 microsecMax = parseInt((this._defaults.microsecMax - ((this._defaults.microsecMax - this._defaults.microsecMin) % this._defaults.stepMicrosec)), 10);
 
                 if (this.hour_slider) {
@@ -1091,7 +1091,7 @@ define(['aloha/jquery'], function(jQuery) {
         if (parseRes.timeObj) {
             var t = parseRes.timeObj;
             parseRes.date.setHours(t.hour, t.minute, t.second, t.millisec);
-            parseRex.date.setMicroseconds(t.microsec);
+            parseRes.date.setMicroseconds(t.microsec);
         }
 
         return parseRes.date;

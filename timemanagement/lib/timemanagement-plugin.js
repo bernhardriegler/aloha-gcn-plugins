@@ -9,12 +9,8 @@ define([
 	'css!timemanagement/css/timemanagement.css'
 ], function(Aloha,Plugin, GCNplugin, i18n, i18nCore, $) {
 	'use strict';
-
-	console.log(GCNplugin);
-	console.log(arguments);
-	debugger;
-
 	
+	var $cdateelement;
 	/**
 	 * We want to use the sidebar too
 	 * Have a look at http://www.aloha-editor.org/guides/sidebar.html
@@ -31,15 +27,21 @@ define([
 						</fieldset>\
 					  </div>',
 			onInit: function () {
-				console.log("Init sidebar called");
-				$('#aloha-timemanagement-cdate').datetimepicker();
+				$cdateelement = $('#aloha-timemanagement-cdate',this.element);
+				$cdateelement.datetimepicker({
+					dateFormat : 'dd.mm.yy',
+					microsecMax: 999,
+					onSelect:function(textDate, dateTimepicker){
+						GCN.page(GCNplugin.page.id(), function(page){
+							var d = $cdateelement.datetimepicker('getDate');
+						});
+					} 
+				});
 			},
 			onActivate: function(effective) {
 				GCN.page(GCNplugin.page.id(), function(page){
 					var timemanagement = page.prop('timeManagement');
-					console.log(timemanagement);
 					var cdate = page.prop('cdate');
-					console.log(cdate);
 					$('#aloha-timemanagement-cdate').datetimepicker('setDate', new Date(cdate * 1000));
 				});
 				this.content.find('#aloha-timemanagement-panel-effective-content').html($(effective).html());

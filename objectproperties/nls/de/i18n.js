@@ -1,6 +1,6 @@
 define({
     "your.key.here": "Beschreibung in Deutsch",
     "your.other.key.here": "Noch mehr Text",
-    "sidebar.timemanagement.title":"Time management"
+    "sidebar.objectproperties.title":"Objekteigenschaften"
     // continue here for all labels
 });

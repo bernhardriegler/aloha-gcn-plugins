@@ -38,7 +38,8 @@ define([
 				$cdateelement = $('#aloha-timemanagement-cdate',this.element);
 				$cdateelement.datetimepicker({
 					dateFormat : 'dd.mm.yy',
-					microsecMax: 999
+					microsecMax: 999,
+					firstDay: 1
 				});
 				$cdateelement.on('change', function(){
 					var elem = this;
@@ -56,7 +57,8 @@ define([
 				$fromelement = $('#aloha-timemanagement-from',this.element);
 				$fromelement.datetimepicker({
 					dateFormat : 'dd.mm.yy',
-					microsecMax: 999
+					microsecMax: 999,
+					firstDay: 1
 				});
 				$fromelement.on('change', function(){
 					var elem = this;
@@ -67,15 +69,18 @@ define([
 							var d = $fromelement.datetimepicker('getDate');
 							time = d.getTime() / 1000;
 						}
-						timemanagement.start = time;
-						page.prop('timeManagement', timemanagement);
+						if(typeof timemanagement !== 'undefined') {
+							timemanagement.start = time;
+							page.prop('timeManagement', timemanagement);
+						}
 					});
 				});
 				//INIT TO DATE
 				$toelement = $('#aloha-timemanagement-to',this.element);
 				$toelement.datetimepicker({
 					dateFormat : 'dd.mm.yy',
-					microsecMax: 999
+					microsecMax: 999,
+					firstDay: 1
 				});
 				$toelement.on('change', function(){
 					var elem = this;
@@ -86,8 +91,10 @@ define([
 							var d = $toelement.datetimepicker('getDate');
 							time = d.getTime() / 1000;
 						}
-						timemanagement.end = time;
-						page.prop('timeManagement', timemanagement);
+						if(typeof timemanagement !== 'undefined') {
+							timemanagement.end = time;
+							page.prop('timeManagement', timemanagement);
+						}
 					});
 				});
 				//INIT VALUES

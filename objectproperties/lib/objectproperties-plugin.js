@@ -21,6 +21,13 @@ define([
 	function openTag($elem) {
 		var pageId = GCNPlugin.page.id();
 		GCN.page(pageId).tag($elem.attr("data-keyword"), function(tag){
+			//first we have to try to close any open tag fill
+			try {
+				GCNPlugin.closeLightbox();
+			} catch(err) {
+				//tag fill could not be closed because it was not open
+			}
+			//now we can open the desired object property as tag fill
 			console.log('opening tag fill for', pageId, tag.prop('id'));
 			GCNPlugin.openTagFill(tag.prop('id'), pageId);
 		});
@@ -57,12 +64,22 @@ define([
 				$buttoncontainer.on('click', '.aloha-op-button', function(){
 					openTag($(this));
 				});
-				$(plugin._settings.tags).each(function(){
-					var html = formatTemplate(plugin._settings.template, this);
-					var $button = $(html);
-					$button.attr("data-keyword", this.tag);
-					$button.addClass("aloha-op-button");
-					$buttoncontainer.append($button);
+				var pageId = GCNPlugin.page.id();
+
+				GCN.page(pageId).tags(function(tags) {
+					$(plugin._settings.tags).each(function(){
+						var display = false;
+						for(var i = 0; i<tags.length; i++) {
+							if(this.tag === tags[i]._name) display = true;
+						}
+						if(display) {
+							var html = formatTemplate(plugin._settings.template, this);
+							var $button = $(html);
+							$button.attr("data-keyword", this.tag);
+							$button.addClass("aloha-op-button");
+							$buttoncontainer.append($button);
+						}
+					});
 				});
 			}
 		});

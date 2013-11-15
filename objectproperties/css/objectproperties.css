@@ -1,0 +1,6 @@
+.aloha-op-button { padding: 5px 0px 5px 50px; border: none; cursor: pointer; }
+.aloha-op-button:hover { text-decoration:underline; }
+.ob_permissions { background: url(images/i_permissions.png) 5px 0 no-repeat; }
+.ob_no_permissions { background: url(images/i_permissions_deny.png) 5px 0 no-repeat; }
+.ob_grpi_author_auto { background: url(images/i_authors.png) no-repeat; }
+

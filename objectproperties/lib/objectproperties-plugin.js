@@ -28,27 +28,30 @@ define([
     // update validation when clsoing tagfill
     // compare and set/remove class "is-filled"
     function validateTag($elem) {
+        // check if validation config is set
+        if(tags[i].part(this.checkProp) !== null) {
         // focus event is fired on tagfill close (gcn-plugin.js:715)
         // handle this once
         $('body').one('focus.objectpropertiesplugin', function (e) {
-            // get the page and tag obj after tagfill close to compare changes
-            var pageId = GCNPlugin.page.id();
-            GCN.page(pageId, function (page) {
-                // get fresh tag object
-                page.clear();
-                GCN.page(pageId).tag($elem.attr("data-keyword"), function(tag){
-                    console.log('run validation for ', pageId, tag.prop('id'));
-                    // get part and value to compare from html (write to html before)
-                    if (tag.part($elem.attr("data-checkprop")).toString() !== $elem.attr("data-checkpropvalue")) {
-                        // add class
-                        $elem.addClass('aloha-op-button-isfilled');
-                    } else {
-                        // not filled - remove class "is-filled"
-                        $elem.removeClass('aloha-op-button-isfilled');
-                    }
+                // get the page and tag obj after tagfill close to compare changes
+                var pageId = GCNPlugin.page.id();
+                GCN.page(pageId, function (page) {
+                    // get fresh tag object
+                    page.clear();
+                    GCN.page(pageId).tag($elem.attr("data-keyword"), function(tag){
+                        console.log('run validation for ', pageId, tag.prop('id'));
+                        // get part and value to compare from html (write to html before)
+                        if (tag.part($elem.attr("data-checkprop")).toString() !== $elem.attr("data-checkpropvalue")) {
+                            // add class
+                            $elem.addClass('aloha-op-button-isfilled');
+                        } else {
+                            // not filled - remove class "is-filled"
+                            $elem.removeClass('aloha-op-button-isfilled');
+                        }
+                    });
                 });
             });
-        });
+        }
     }
 
     function openTag($elem) {
@@ -108,8 +111,11 @@ define([
                         for(var i = 0; i<tags.length; i++) {
                             if(this.tag === tags[i]._name) {
                                 display = true;
-                                if (tags[i].part(this.checkProp) !== this.checkPropValue) {
-                                    filled = true;
+                                // check if validation config is set
+                                if(tags[i].part(this.checkProp) !== null) {
+                                    if (tags[i].part(this.checkProp) !== this.checkPropValue) {
+                                        filled = true;
+                                    }
                                 }
                             }
                         }

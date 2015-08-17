@@ -29,7 +29,7 @@ define([
     // compare and set/remove class "is-filled"
     function validateTag($elem) {
         // check if validation config is set
-        if(tags[i].part(this.checkProp) !== null) {
+        if($elem.attr('data-checkprop') !== undefined) {
         // focus event is fired on tagfill close (gcn-plugin.js:715)
         // handle this once
         $('body').one('focus.objectpropertiesplugin', function (e) {
@@ -112,7 +112,7 @@ define([
                             if(this.tag === tags[i]._name) {
                                 display = true;
                                 // check if validation config is set
-                                if(tags[i].part(this.checkProp) !== null) {
+                                if(this.hasOwnProperty('checkProp')) {
                                     if (tags[i].part(this.checkProp) !== this.checkPropValue) {
                                         filled = true;
                                     }
